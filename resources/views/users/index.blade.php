@@ -13,8 +13,19 @@
         URIには、パラメータがないので、第3引数は、からの配列になってる --}}
         {!! link_to_route('dashboard', 'Dashboardへ戻る', []) !!}
     </div>
-    {{-- ユーザ一覧のページを取り込んでる --}}
-    @include('users.users')
+    {{-- @authによってログインしてるユーザだけ見られる --}}
+    {{-- @auth @else @endauth は、ミドルウェアで'middleware' => 'auth'　をつけてるから本当はいらないかも --}}
+    @auth
+        {{-- ユーザ一覧のページを取り込んでる --}}
+        @include('users.users')
+    {{-- ログインしてなかったら ロクイン画面へ --}}
+    @else
+        <p>ログインしてください</p>
+        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
+        @if (Route::has('register'))
+        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+        @endif
+    @endauth
 
 @endsection
 
