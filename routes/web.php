@@ -25,4 +25,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 // resource 使うと、名前をつけたように使える 'users.index' とか 'users.show'とか　link_to_route　で使えるらしい
 // php artisan route:list　のコマンドで、確認してみて
-Route::resource('/users', UsersController::class, ['only' => ['index', 'show', 'edit']]);
+Route::resource('/users', UsersController::class, ['only' => ['index', 'show', 'edit', 'update']]);
