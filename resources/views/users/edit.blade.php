@@ -4,7 +4,7 @@
 
 @section('menubar')
     @parent
-    ユーザー情報編集ページ<small>メールアドレス以外</small>
+    ユーザー情報編集ページ<small>パスワード以外</small>
 @endsection
 
 @section('content')

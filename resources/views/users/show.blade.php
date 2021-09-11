@@ -27,6 +27,7 @@
             </tr>
             <tr>
                 <td>{{$user->id}}</td><td>{{$user->name}}</td><td>{{$user->email}}</td>
+
                 {{-- もし、ログインしているユーザー自身なら、編集 削除ができる Auth::id() と Auth::user()->id は同じ --}}
                 @if($user == Auth::user())
                 <td>
@@ -38,6 +39,17 @@
                         URI は、  users/{user}/edit   NAMEは、 users.edit
                         パラメータの {user} のところに入るのに、第3引数に ['user' => Auth::id()] または、['user' => Auth::user()->id]を入れてる
                         --}}
+                    </button>
+                </td>
+                <td>
+                    {{-- パスワードは、 PasswordController
+                        php artisan route:list　調べると
+                         GET|HEAD      password/{password}/edit         password.edit
+                         {} パラメータのキーがpassword になりますので、link_to_route　第3引数に ['password' => Auth::user()->id] と書いて
+                         パラメータに値をセットします
+                        --}}
+                    <button type="button" class="btn btn-light" display="inline-block">
+                        {!! link_to_route('password.edit', 'パスワード変更', ['password' => Auth::user()->id]) !!}
                     </button>
                 </td>
                 @endif
