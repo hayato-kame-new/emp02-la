@@ -38,4 +38,9 @@ class UsersController extends Controller
         return view('users.show', ['user' => $user]);
     }
     */
+
+    public function edit(Request $request) {
+        // dd($request->user);  // "51" とか入ってる
+        
+    }
 }
