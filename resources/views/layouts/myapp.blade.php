@@ -13,6 +13,9 @@
             font-size: 65px; text-align:right; color:#f6f6f6;
             margin:-20px 0px -30px 0px; letter-spacing:-4pt;
         }
+        h3 {
+            margin-bottom:20px;
+        }
         hr {
             margin: 25px 100px; border-top: 1px dashed #ddd;
         }
