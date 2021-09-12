@@ -8,14 +8,14 @@
 @endsection
 
 @section('content')
-    <div class="toolbar">
-        {{--  link_to_routeの第一実引数は　 ->name('dashboard') 　で名前をつけたものを指定する
-        URIには、パラメータがないので、第3引数は、からの配列になってる --}}
-        {!! link_to_route('dashboard', 'Dashboardへ戻る', []) !!}
-    </div>
-    {{-- @authによってログインしてるユーザだけ見られる --}}
-    {{-- @auth @else @endauth は、ミドルウェアで'middleware' => 'auth'　をつけてるから本当はいらないかも --}}
+{{-- @authによってログインしてるユーザだけ見られる --}}
+{{-- @auth @else @endauth は、ミドルウェアで'middleware' => 'auth'　をつけてるから本当はいらないかも --}}
     @auth
+        <div class="toolbar">
+            {{--  link_to_routeの第一実引数は　 ->name('dashboard') 　で名前をつけたものを指定する
+            URIには、パラメータがないので、第3引数は、からの配列になってる --}}
+            {!! link_to_route('dashboard', 'Dashboardへ戻る', []) !!}
+        </div>
         {{-- ユーザ一覧のページを取り込んでる --}}
 
         @include('users.users')

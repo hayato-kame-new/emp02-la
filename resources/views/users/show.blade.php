@@ -30,28 +30,39 @@
 
                 {{-- もし、ログインしているユーザー自身なら、編集 削除ができる Auth::id() と Auth::user()->id は同じ --}}
                 @if($user == Auth::user())
-                <td>
-                    <button type="button" class="btn btn-light" display="inline-block">
-                        {!! link_to_route('users.edit', 'ユーザー情報編集', ['user' => Auth::id()]) !!}
-                        {{-- 'user' => Auth::id()  でも  'user' => Auth::user()->id どっちでもいい
-                        URIには、パラメータがあるので、　第3引数は、　['user' => Auth::id()]　　配列になってる
-                        php artisan route:list　のコマンドで、確認してみると、ルーティングは resourceメソッドなので、
-                        URI は、  users/{user}/edit   NAMEは、 users.edit
-                        パラメータの {user} のところに入るのに、第3引数に ['user' => Auth::id()] または、['user' => Auth::user()->id]を入れてる
-                        --}}
-                    </button>
-                </td>
-                <td>
-                    {{-- パスワードは、 PasswordController
-                        php artisan route:list　調べると
-                         GET|HEAD      password/{password}/edit         password.edit
-                         {} パラメータのキーがpassword になりますので、link_to_route　第3引数に ['password' => Auth::user()->id] と書いて
-                         パラメータに値をセットします
-                        --}}
-                    <button type="button" class="btn btn-light" display="inline-block">
-                        {!! link_to_route('password.edit', 'パスワード変更', ['password' => Auth::user()->id]) !!}
-                    </button>
-                </td>
+
+                    <td>
+                        <button type="button" class="btn btn-primary" display="inline-block">
+                            {!! link_to_route('users.edit', 'ユーザー情報編集', ['user' => Auth::id()], ['style' => "color:white;"]) !!}
+                            {{-- 'user' => Auth::id()  でも  'user' => Auth::user()->id どっちでもいい
+                            URIには、パラメータがあるので、　第3引数は、　['user' => Auth::id()]　　配列になってる
+                            php artisan route:list　のコマンドで、確認してみると、ルーティングは resourceメソッドなので、
+                            URI は、  users/{user}/edit   NAMEは、 users.edit
+                            パラメータの {user} のところに入るのに、第3引数に ['user' => Auth::id()] または、['user' => Auth::user()->id]を入れてる
+                            --}}
+                        </button>
+                    </td>
+
+                    <td>
+                        {{-- パスワードは、 PasswordController
+                            php artisan route:list　調べると
+                            GET|HEAD      password/{password}/edit         password.edit
+                            {} パラメータのキーがpassword になりますので、link_to_route　第3引数に ['password' => Auth::user()->id] と書いて
+                            パラメータに値をセットします
+                            --}}
+                        <button type="button" class="btn btn-warning" display="inline-block">
+                            {!! link_to_route('password.edit', 'パスワード変更', ['password' => Auth::user()->id], ['style' => "color:white;"]) !!}
+                        </button>
+                    </td>
+
+                    <td>
+                        {{--  DELETE      | users/{user}              | users.destroy    --}}
+                        {{-- 　ルーティングが resourceメソッドなので、 destroyアクションへは 'methon' => 'delete' なので、
+                        link_to_route は　GET だから 使わずに form にする --}}
+                        {!! Form::model('users', ['route' => ['users.destroy', Auth::user()->id], 'method' => 'delete']) !!}
+                            {!! Form::submit('削除', ['class' => 'btn btn-danger btn-sm', 'display' => 'inline-block', 'style' => 'color:white;',]) !!}
+                        {!! Form::close() !!}
+                    </td>
                 @endif
             </tr>
         </table>

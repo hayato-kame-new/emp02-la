@@ -75,7 +75,7 @@ class UsersController extends Controller
     */
 
 
-    public function update(Request $request) {
+    public function update(Request $request, $id) {
         /*
         http://localhost:8000/users/51
         users/{user}  の　{} のパラメータのところに、　Auth::user()->id　の返り値が入る
@@ -124,7 +124,11 @@ class UsersController extends Controller
              'password',
          ];
          */
-        return redirect('/users');
+        // return redirect('/users');
+         // 詳細ページへ 行きたいリダイレクト なら リダイレクトの方法 パラメータの キー 'user' 値に $id をセットする
+         return redirect(route('users.show', [
+            'user' => $id,
+        ]));
     }
 
 
@@ -141,9 +145,30 @@ class UsersController extends Controller
             'email' => $request->email,
         ];
         $user->fill($param)->save();
-        return redirect('/users');
+        // return redirect('/users');
+         // 詳細ページへ 行きたいなら
+         return redirect(route('users.show', [
+            'user' => $id,
+        ]));
     }
     */
+
+     // パスワードのことは、このコントローラではなく、PasswordControllerを作成しました。
+    // 内容は、PasswordControllerを作成してから、jetstreamで自動生成された UpdateUserPassword.phpから 内容を参考にして編集した。
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request) {
+        // dd($request->user);  // "51" とか入ってる
+        $user = User::find($request->user);
+        $user->delete();
+        return redirect('/users');
+    }
+
 
 
 }

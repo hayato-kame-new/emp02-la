@@ -25,7 +25,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 // resource 使うと、名前をつけたように使える 'users.index' とか 'users.show'とか　link_to_route　で使えるらしい
 // php artisan route:list　のコマンドで、確認してみて
-Route::resource('/users', UsersController::class, ['only' => ['index', 'show', 'edit', 'update']]);
+Route::resource('/users', UsersController::class, ['only' => ['index', 'show', 'edit', 'update', 'destroy']]);
 // ユーザパスワードは、別のコントローラで作る   resource 使う
 Route::resource('/password', PasswordController::class, ['only' => ['edit', 'update']]);
 

@@ -32,6 +32,13 @@
                 </label>
             </div>
 
+            {{-- 追加した --}}
+            <div class="block mt-4">
+                <p><small>新規登録まだの方は</small></p>
+                <a href="http://localhost:8000/register" class="ml-4 text-sm text-gray-700 underline" >Register</a>
+            </div>
+            {{-- ここまで追加した部分 --}}
+
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
