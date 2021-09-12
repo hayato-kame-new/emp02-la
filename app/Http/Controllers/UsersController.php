@@ -14,8 +14,21 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function index() {
+    //     $users = User::all();
+    //     return view('users.index', ['users' => $users]);
+    // }
+
+
+    // public function index() {
+    //     $users = User::orderBy('id', 'desc')->get();  //  ->get()がないと、エラー
+    //     // dd($users);
+    //     return view('users.index', ['users' => $users]);
+    // }
+
     public function index() {
-        $users = User::all();
+        $users = User::orderBy('id', 'desc')->paginate(10);  //  ->get()がないと、エラー
+        // dd($users);
         return view('users.index', ['users' => $users]);
     }
 

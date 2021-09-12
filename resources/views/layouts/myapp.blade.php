@@ -26,9 +26,9 @@
         th {
             background-color: #0099ff; color:#fff; padding:5px 10px;
         }
-         td {
+         /* td {
              border: solid 1px #aaa; color:#999; padding:5px 10px;
-        }
+        } */
          a {
              text-decoration: none;
             }
