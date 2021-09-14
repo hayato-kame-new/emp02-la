@@ -45,21 +45,6 @@ class Department extends Model
      */
     protected $guarded = ['department_id'];
 
-     //利用上は部署テーブルが社員テーブルの親。
-    // つまり、部署の下に社員が存在しているという関係
-    // 部署にはたくさんの社員がいる(部署 hasMany 社員の関係)
-    // 社員はどこか１つの部署に所属している(社員 belongsTo 部署）
-
-    /**
-     * hasMany設定
-     * こちらのテーブル departmentsテーブルが主テーブルで、employeesテーブルが従テーブル
-     * メソッド名は、employees() hasManyだから、複数形になる 自分自身のインスタンスがもつ、インスタンスメソッドのhasMany()メソッドを呼び出す
-     */
-    public function employees()
-    {
-        return $this->hasMany(Employee::class, 'employee_id');// 第二引数外部キー
-    }
-
     /**
      * バリデーションの ルールの フィールドです。staticな、静的なクラスフィールドとして、継承されてるので、自クラスで値を代入する。
      * public で static な クラスフィールドで定義すると、
@@ -79,6 +64,26 @@ class Department extends Model
         'department_name.required' => '部署名は必ず入れてください。'
     ];
 
+     //利用上は部署テーブルが社員テーブルの親。
+    // つまり、部署の下に社員が存在しているという関係
+    // 部署にはたくさんの社員がいる(部署 hasMany 社員の関係)
+    // 社員はどこか１つの部署に所属している(社員 belongsTo 部署）
 
+    /**
+     * hasMany設定
+     * こちらのテーブル departmentsテーブルが主テーブルで、employeesテーブルが従テーブル
+     * メソッド名は、employees() hasManyだから、複数形になる 自分自身のインスタンスがもつ、インスタンスメソッドのhasMany()メソッドを呼び出す
+     */
+    public function employees()
+    {
+        return $this->hasMany(Employee::class, 'employee_id');// 第二引数外部キー
+    }
+
+
+
+    // コントローラで使用する、データベースとの連携のロジックを
+    // DepartmentLogicクラスを作って  同じ階層(Modelsフォルダの直下)に書いてます
+    // ロジックは、 Modelsフォルダ内で作ればいい  データベースを操作するクラスと外部 API を実行するクラスに分けてみたり、
+    // データを操作するクラスとデータ自体を扱うクラスに分けてみたりといった、他の色んなデザインパターンを学ぶと、すんなりと入ってくるのではないかと思います。
 
 }
