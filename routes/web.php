@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 // 追加
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\DepartmentsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,3 +30,7 @@ Route::resource('/users', UsersController::class, ['only' => ['index', 'show', '
 // ユーザパスワードは、別のコントローラで作る   resource 使う
 Route::resource('/password', PasswordController::class, ['only' => ['edit', 'update']]);
 
+Route::get('/departments', [DepartmentsController::class, 'index'])->name('departments.index');
+
+//  /departments/new_edit/{dep_id}  のパラメータは、
+Route::get('/departments/new_edit/{dep_id}', [DepartmentsController::class, 'new_edit'])->name('departments.new_edit');

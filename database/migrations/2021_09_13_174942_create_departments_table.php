@@ -26,7 +26,7 @@ class CreateDepartmentsTable extends Migration
             // 'department_id' カラムは、 従テーブルのemployeesから、参照されます。データ型を合わせてください。
             // employeesの'department_id'カラムと データ型を合わせる必要がある
             $table->string('department_id', 20)->primary();  // 主キーを文字列にする 部署ID オートインクリメントは無し
-            $table->string('department', 20)->unique(); // 部署名
+            $table->string('department_name', 20)->unique(); // 部署名
             // 今回のテーブルは、タイムスタンプいらない  モデルにも、いらない設定を書かないといけません。
             // $table->timestamps();
         });
