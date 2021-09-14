@@ -43,7 +43,7 @@
         <div class="row">
         {!! Form::submit('送信', ['class' => 'btn btn-secondary offset-3', 'confirm' => 'この内容で送信しますか？']) !!}
         </div>
-        {!! Form::close() !!}
+    {!! Form::close() !!}
 @endsection
 
 @section('footer')

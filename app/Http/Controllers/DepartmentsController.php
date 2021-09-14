@@ -85,8 +85,8 @@ class DepartmentsController extends Controller
         switch($request->action) {
             case 'add':
 
-                // バリデーションして
-                
+                // バリデーションして  Department::$rules  クラスフィールド   Department::$messages  クラスフィールド
+                $this->validate($request, Department::$rules, Department::$messages);
 
                 // まず、文字列型のプライマリーキーを生成するメソッドをロジッククラスから呼び出す
                 // 処理インスタンスを生成
@@ -100,6 +100,24 @@ class DepartmentsController extends Controller
             break;
 
             case 'edit':
+                // バリデーションして  Department::$rules  クラスフィールド   Department::$messages  クラスフィールド
+                $this->validate($request, Department::$rules, Department::$messages);
+
+                // 編集では、 ルーティングが、  Route::post('/departments/create_update/{dep_id?}',[DepartmentsController::class, 'create_update'])->name('departments.create_update');
+                //  {dep_id?}  が、任意パラメータの キーです   ? が付いていて任意になってるのは、新規の時に、無いからです。null も許容するために   ? が必要です
+
+                // フォームから ['route' => ['departments.create_update', $department->department_id]     この、 $department->department_id  が、 {} 任意パラメータの値です
+
+                // 任意パラメータから、 値が取得できます $request->キー    $request->dep_id   で 値が取れます
+                // dd($request->dep_id);  // "D01" とか
+                $department = Department::find($request->dep_id);  // find は　プライマリーキーの値を引数にします
+
+                $department->department_name = $request->department_name;
+                // modelクラスに protected $guarded = ['department_id'];  を設定してるので、department_id　カラムには何もしないで、データを更新ができるようになってる。
+
+                $department->save();
+
+
             break;
         }
 
