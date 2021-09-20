@@ -20,6 +20,15 @@
 @endsection
 
 @section('content')
+   
+　  @if(session('flash_message'))
+        <p class="notice">
+            メッセージ: {{session('flash_message')}}
+        </p>
+    @endif
+    <div class="toolbar">
+        {!! link_to_route('departments.index', '部署一覧ページへ戻る', []) !!}
+    </div>
     {{-- 'method' => 'post' にしたので、リクエストボディ（本体）に情報が載る
     フォーム送信先のパスは、必須パラメータ付き   のルーティングになってる
     {}のパラメータの名前（キー）に、? が無いので 必須パラメータです
@@ -32,7 +41,15 @@
 
     --}}
     {!! Form::model($department, ['route' => ['departments.create_update', $department->department_id], 'method' => 'post']) !!}
-
+    <div class="form-group form-inline row">
+        <div class="col-sm-8 offset-sm-3" style="color:red;">
+        @error('department_name')
+            <p class="valication">
+                {{$message}}
+            </p>
+        @enderror
+        </div>
+    </div>
         <div class="form-group form-inline row">
             {!! Form::label('department_name', '部署名: ', ['class' => 'col-sm-3 col-form-label']) !!}
             {{-- textの第2引数は、デフォルト値初期値になります。新規の時には、null となります --}}

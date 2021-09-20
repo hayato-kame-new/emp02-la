@@ -89,6 +89,8 @@
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
 
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+{{-- FontAweSome用 --}}
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
 </body>
 </html>
 

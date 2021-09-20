@@ -8,8 +8,18 @@
 @endsection
 
 @section('content')
-    {{-- @if(count($departments) > 0) --}}
-    @if(isset($departments))
+    @if(session('f_message'))
+    <p class="notice">
+        メッセージ: {{session('f_message')}}
+    </p>
+    @endif
+
+    <div class="toolbar">
+    {!! link_to_route('dashboard', 'Dashboardへ戻る') !!}
+    </div>
+
+    @if(count($departments) > 0)
+    {{-- @if(isset($departments)) --}}
         <div class="row">
             <div class="col-sm-7 offset-sm-2">
                 <table class="table table-striped">
@@ -17,10 +27,10 @@
                 <tr><th width="25%">部署ID</th><th>部署名</th><th colspan="2"></tr>
                 </thead>
                 <tbody>
-                    @foreach ($departments as $dep)
+                    @foreach ($departments as $department)
                         <tr>
-                            <td>{{$dep->department_id}}</td>
-                            <td>{{$dep->department_name}}</td>
+                            <td>{{$department->department_id}}</td>
+                            <td>{{$department->department_name}}</td>
                             <td>
                                 {{--
                                     HTTPメソッドをフォームでGETにすると、クエリー文字列として、URLにくっついて送ります
@@ -31,20 +41,26 @@
                                      php artisan route:list  で確認すると
                                     GET|HEAD  | departments/new_edit/{dep_id}    | departments.new_edit
 
-                                    'route' => ['departments.new_edit', $dep->department_id  の、
+                                    'route' => ['departments.new_edit', $department->department_id  の、
                                     $dep->department_id　は、  {dep_id}  の値になるので、コントローラでは $request->dep_id  で取得できる
                                     http://localhost:8000/departments/new_edit/D02?action=edit
                                     パラメータの D02 が  departments/new_edit/{dep_id}  の {dep_id} の値として送られてる
                                         --}}
-                                {!! Form::model('$dep', ['route' => ['departments.new_edit', $dep->department_id], 'method' => 'get']) !!}
+                                {!! Form::model($department, ['route' => ['departments.new_edit', $department->department_id], 'method' => 'get']) !!}
 
                                     {!! Form::hidden('action', 'edit') !!}
                                      {{-- 部署IDは、下のようにhiddenで送ってもいい --}}
-                                    {{-- {!! Form::hidden('department_id', $dep->department_id) !!} --}}
+                                    {{-- {!! Form::hidden('department_id', $department->department_id) !!} --}}
                                     {!! Form::submit('編集', ['class' => 'btn btn-primary']) !!}
                                 {!! Form::close() !!}
                             </td>
                             <td>
+                                {!! Form::model($department, ['route' => ['departments.destroy', $department->department_id], 'method' => 'post']) !!}
+
+                                    {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
+
+                                    {!! Form::button('<i class="fas fa-trash-alt"></i>', ['class' => "btn btn-danger", 'type' => 'submit']) !!}
+                                {!! Form::close() !!}
                             </td>
                         </tr>
                     @endforeach
@@ -55,7 +71,7 @@
         </div>
     @else
     {{-- 部署がひとつもなかった。 --}}
-    <p>現在登録されている部署はありません</p>
+    <p class="ml-4">現在登録されている部署はありません</p>
     @endif
     <div class="row">
         <div class="col-sm-7 offset-sm-2 mt-3 mb-3">

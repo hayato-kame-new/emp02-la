@@ -97,6 +97,7 @@ class DepartmentsController extends Controller
                 $department->department_id = $generated_id;
                 $department->department_name = $request->department_name;
                 $department->save();
+                $f_message = '部署データを新規作成しました。';
             break;
 
             case 'edit':
@@ -116,13 +117,24 @@ class DepartmentsController extends Controller
                 // modelクラスに protected $guarded = ['department_id'];  を設定してるので、department_id　カラムには何もしないで、データを更新ができるようになってる。
 
                 $department->save();
-
+                $f_message = '部署名を更新しました。';
 
             break;
+
         }
 
-        return redirect('/departments');
+        return redirect('/departments')->with(['f_message' => $f_message]);;
 
 
+    }
+
+    public function destroy(Request $request)
+    {
+       //  dd($request->dep_id);  // $request->キー  で　値が取得できる
+        $department = Department::find($request->dep_id);
+        // dd($department);
+        $department->delete();
+        $f_message = '部署データを削除しました。';
+        return redirect('/departments')->with(['f_message' => $f_message]);
     }
 }

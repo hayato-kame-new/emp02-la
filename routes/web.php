@@ -38,4 +38,7 @@ Route::get('/departments', [DepartmentsController::class, 'index'])->name('depar
 Route::get('/departments/new_edit/{dep_id?}', [DepartmentsController::class, 'new_edit'])->name('departments.new_edit');
 // {}のパラメータの名前（キー）に、? が無いとエラー  任意パラメータです なぜなら、新規登録の時に、nullが値として入ってくるので、任意パラメータにしないとエラーになる
 Route::post('/departments/create_update/{dep_id?}',[DepartmentsController::class, 'create_update'])->name('departments.create_update');
+// {dep_id}   必須パラメータ　{} の中にあるのは キー
+Route::post('/departments/destroy/{dep_id}', [DepartmentsController::class, 'destroy'])->name('departments.destroy');
+
 
