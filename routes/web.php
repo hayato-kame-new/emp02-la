@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\DepartmentsController;
+use App\Http\Controllers\EmployeesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,4 +42,8 @@ Route::post('/departments/create_update/{dep_id?}',[DepartmentsController::class
 // {dep_id}   必須パラメータ　{} の中にあるのは キー
 Route::post('/departments/destroy/{dep_id}', [DepartmentsController::class, 'destroy'])->name('departments.destroy');
 
+Route::get('/employees', [ EmployeesController::class, 'index' ])->name('employees.index');
 
+Route::get('/employees/new_edit', [ EmployeesController::class, 'new_edit' ])->name('employees.new_edit');
+
+Route::post('/employees/emp_control', [ EmployeesController::class, 'emp_control' ])->name('employees.emp_control');
