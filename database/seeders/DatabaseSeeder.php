@@ -16,5 +16,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call([UsersTableSeeder::class]);
         $this->call([DepartmentsTableSeeder::class]);
+        $this->call([PhotosTableSeeder::class]);
+    // 従テーブルを一番最後に書く
+        $this->call([EmployeesTableSeeder::class]);
     }
 }
