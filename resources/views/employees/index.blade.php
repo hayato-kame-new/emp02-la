@@ -34,9 +34,10 @@
                                 <td>{{$employee->employee_id}}</td>
                                 <td>{{$employee->name}}</td>
                                 <td>
-                                    {{-- <button type="button" class="btn btn-primary" display="inline-block">
-                                        {!! link_to_route('employees.new_edit', '編集', [ 'action' => 'edit', 'employee_id' => $mployee->employee_id ], ['style' => 'color:white;']) !!}
-                                    </button> --}}
+                                    <button type="button" class="btn btn-primary" display="inline-block">
+                                        {!! link_to_route('employees.new_edit', '編集', [ 'action' => 'edit', 'emp_id' => $employee->employee_id ], ['style' => 'color:white;']) !!}
+                                    </button>
+                                      {{-- Route::get('/employees/new_edit/{emp_id?}', [ EmployeesController::class, 'new_edit' ])->name('employees.new_edit'); --}}
                                 </td>
                                 <td>
 

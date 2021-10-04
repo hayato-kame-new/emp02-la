@@ -44,6 +44,7 @@ Route::post('/departments/destroy/{dep_id}', [DepartmentsController::class, 'des
 
 Route::get('/employees', [ EmployeesController::class, 'index' ])->name('employees.index');
 
-Route::get('/employees/new_edit', [ EmployeesController::class, 'new_edit' ])->name('employees.new_edit');
+// {}のパラメータの名前（キー）に、? が無いとエラー  任意パラメータです なぜなら、新規登録の時に、nullが値として入ってくるので、任意パラメータにしないとエラーになる
+Route::get('/employees/new_edit/{emp_id?}', [ EmployeesController::class, 'new_edit' ])->name('employees.new_edit');
 
 Route::post('/employees/emp_control', [ EmployeesController::class, 'emp_control' ])->name('employees.emp_control');
