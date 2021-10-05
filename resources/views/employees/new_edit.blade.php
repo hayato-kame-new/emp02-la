@@ -47,6 +47,24 @@
             {!! Form::hidden('action', $action) !!}
             {!! Form::hidden('photo_id', $employee->photo_id) !!}
             {!! Form::hidden('employee_id', $employee->employee_id) !!}
+
+
+            <div class="form-group form-inline row">
+                {!! Form::label('name', '名前:', ['class' => 'col-sm-3 col-form-label', ]) !!}
+                {!! Form::text('name', $employee->name, ['class' => 'col-sm-9 form-control']) !!}
+            </div>
+
+            <div class="form-group form-inline row">
+                {!! Form::label('age', '年齢:', ['class' => 'col-sm-3 col-form-label', ]) !!}
+                {!! Form::text('age', $employee->age, ['class' => 'col-sm-9 form-control']) !!}
+            </div>
+
+            <div class="form-group form-inline row">
+                {!! Form::label('gender', '性別:', ['class' => 'col-sm-3 col-form-label', ]) !!}
+                {!! Form::text('gender', $employee->getStringGender($employee->gender), ['class' => 'col-sm-9 form-control']) !!}
+            </div>
+
+
             {{-- まず、photoテーブルに関するものだけ、表示、変更、アップロードできるか --}}
             {{-- 写真の表示と、画像ファイルのアップロード --}}
             @php
@@ -70,8 +88,72 @@
                 {!! Form::hidden('photo_id', $employee->photo_id) !!}
             </div>
             {{-- ここまで 画像のアップロード --}}
+
+
+            <small>※ 000-0000 の形式で入力してください</small><br>
+            <div class="form-group form-inline row">
+                {!! Form::label('zip_number', '郵便番号:', ['class' => 'col-sm-3 col-form-label', ]) !!}
+                {!! Form::text('zip_number', $employee->zip_number, ['class' => 'col-sm-9 form-control']) !!}
+            </div>
+
+            @php
+                $pref_array = ['', '北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'];
+            @endphp
+
+            <div class="form-group form-inline row">
+                {!! Form::label('pref', '都道府県:', ['class' => 'col-sm-3 col-form-label', ]) !!}
+                {!! Form::select('pref', $pref_array, $employee->pref, ['class' => 'form-control ', 'placeholder' => '選択してください']) !!}
+            </div>
+
+            <div class="form-group form-inline row">
+                {!! Form::label('address1', '住所1(市区町村郡):', ['class' => 'col-sm-3 col-form-label']) !!}
+                {!! Form::text('address1', $employee->address1, ['class' => 'col-sm-9 form-control']) !!}
+            </div>
+
+            <div class="form-group form-inline row">
+                {!! Form::label('address2', '住所2(町名番地):', ['class' => 'col-sm-3 col-form-label']) !!}
+                {!! Form::text('address2', $employee->address2, ['class' => 'col-sm-9 form-control']) !!}
+            </div>
+
+            <div class="form-group form-inline row">
+                {!! Form::label('address3', '住所3(建物名や番号):', ['class' => 'col-sm-3 col-form-label']) !!}
+                {!! Form::text('address3', $employee->address3, ['class' => 'col-sm-9 form-control']) !!}
+            </div>
+
+            {{-- employeesテーブルには、　'department_id'カラムしかない 表示を部署名にする 外部キー制約で、departmentプロパティとしてアクセルできるようになってるので  --}}
+            <div class="form-group form-inline row">
+                {!! Form::label('department_id', '所属:', ['class' => 'col-sm-3 col-form-label']) !!}
+                {!! Form::select('department_id', $dep_name_array, $employee->department_id, ['class' => 'form-control ', 'placeholder' => '選択してください']) !!}
+            </div>
+
+            <div class="form-group form-inline row">
+                {!! Form::label('hire_date', '入社日:', ['class' => 'col-sm-3 col-form-label']) !!}
+                {!! Form::date('hire_date', $employee->hire_date, ['class' => 'col-sm-9 form-control']) !!}
+            </div>
+
+            <div class="form-group form-inline row">
+                {!! Form::label('retire_date', '退社日:', ['class' => 'col-sm-3 col-form-label']) !!}
+                {!! Form::date('retire_date', $employee->retire_date, ['class' => 'form-dontrol']) !!}
+            </div>
+
+
             {!! Form::submit('送信', ['class' => 'btn btn-primary', 'confirm' => 'この内容で送信しますか?']) !!}
         {!! Form::close() !!}
+
+
+        <div style="margin-top: 10px;">
+            {!! Form::open(['route' => ['employees.emp_control', $employee->employee_id], 'method' => 'post']) !!}
+                {!! Form::hidden('action', 'cancel') !!}
+                {!! Form::submit('キャンセル', ['class' => 'btn btn-primary']) !!}
+            {!! Form::close() !!}
+        </div>
+
+        {{-- 第三引数で ? のクエリー文字列を指定できてます  ?action=add   などのクエリー文字列  --}}
+        {{-- <button style="margin-top: 10px; margin-bottom: 10px;" type="button" class="btn btn-light" display="inline-block">
+            {!! link_to_route('employees.emp_control', 'キャンセル', ['action' => 'cancel'] , ['style' => 'color: blue;']) !!}
+        </button> --}}
+
+
     @endif
 @endsection
 

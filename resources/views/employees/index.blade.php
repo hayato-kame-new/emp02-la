@@ -40,7 +40,9 @@
                                       {{-- Route::get('/employees/new_edit/{emp_id?}', [ EmployeesController::class, 'new_edit' ])->name('employees.new_edit'); --}}
                                 </td>
                                 <td>
-
+                                    <button type="button" class="btn btn-danger" display="inline-block" onclick='confirm("本当に削除してよろしいですか")'>
+                                        {!! link_to_route('employees.delete', "削除", [ 'action' => 'delete', 'emp_id' => $employee->employee_id ], ['style' => 'color: white;'] ) !!}
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
